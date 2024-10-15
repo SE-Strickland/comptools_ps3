@@ -25,7 +25,8 @@ for line in data:
         max_water_level_time = time   
 print(f"The max water level is: {max_water_level} ft. observed on {max_water_level_date} at {max_water_level_time}")
 
-## Question 2:
+
+## Question 2
 
 #Open the file
 data = open('/blue/bsc4452/share/Class_Files/data/CO-OPS_8727520_wl.csv')
@@ -35,6 +36,10 @@ next(data)
 
 #initialize variables 
 max_water_level = 0
+min_water_level = 0
+water_level_sum = 0
+water_level_counts = 0
+
 
 for line in data:
     columns = line.strip().split(',')
@@ -42,11 +47,25 @@ for line in data:
     time = columns[1]
     water_level = float(columns[3].strip('"'))
     
+    #
+    water_level_sum = water_level + water_level_sum
+    water_level_counts = 1 + water_level_counts
+    
     if max_water_level < water_level:
         max_water_level = water_level
         max_water_level_date = date
-        max_water_level_time = time   
-print(f"The max water level is: {max_water_level} ft. observed on {max_water_level_date} at {max_water_level_time}")
+        max_water_level_time = time 
+    if min_water_level == 0 or min_water_level > water_level:
+        min_water_level = water_level
+        min_water_level_date = date
+        min_water_level_time = time
+
+average_water_level = water_level_sum/water_level_counts
+
+print(f"The max water level is: {max_water_level} ft. observed on {max_water_level_date} at {max_water_level_time}.")
+print(f"The min water level is: {min_water_level} ft. observed on {min_water_level_date} at {min_water_level_time}.")
+print(f"The average water level is: {average_water_level:.2f} ft.")
+
 
 ## Question 3:
 
